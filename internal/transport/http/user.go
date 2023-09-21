@@ -41,15 +41,17 @@ func userFromUpdateUserRequest(u UpdateUserRequest) user.User {
 	}
 }
 
+// GetUser - получает и показывает всех пользователей
 func (h *Handler) GetUsers(c *fiber.Ctx) error {
-	comment, err := h.Service.GetUsers(c)
+	user, err := h.Service.GetUsers(c)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
 	}
 
-	return c.JSON(comment)
+	return c.JSON(user)
 }
 
+// PostUser - добавляет нового пользователя
 func (h *Handler) PostUser(c *fiber.Ctx) error {
 	var postUserReq PostUserRequest
 
@@ -57,31 +59,32 @@ func (h *Handler) PostUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
 	}
 
-	cmt := userFromPostUserRequest(postUserReq)
-	cmt, err := h.Service.PostUser(c, cmt)
+	user := userFromPostUserRequest(postUserReq)
+	user, err := h.Service.PostUser(c, user)
 	if err != nil {
 		log.Error(err)
 		return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
 	}
 
-	return c.JSON(cmt)
+	return c.JSON(user)
 }
 
+// UpdateUser - обновляет данные пользователя
 func (h *Handler) UpdateUser(c *fiber.Ctx) error {
-	commentID := c.Params("id")
+	userID := c.Params("id")
 
 	var updateUserRequest UpdateUserRequest
 	if err := c.BodyParser(&updateUserRequest); err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
 	}
 
-	cmt := userFromUpdateUserRequest(updateUserRequest)
+	user := userFromUpdateUserRequest(updateUserRequest)
 
-	cmt, err := h.Service.UpdateUser(c, commentID, cmt)
+	user, err := h.Service.UpdateUser(c, userID, user)
 	if err != nil {
 		log.Error(err.Error())
 		return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
 	}
 
-	return c.JSON(cmt)
+	return c.JSON(user)
 }

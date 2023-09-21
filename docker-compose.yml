@@ -7,9 +7,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=onay
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=1234
     networks:
       - fullstack
     volumes:
@@ -20,10 +20,10 @@ services:
     container_name: "users-rest-api"
     environment:
       DB_USERNAME: "postgres"
-      DB_PASSWORD: "postgres"
-      DB_DB: "postgres"
-      DB_HOST: "db"
-      DB_TABLE: "postgres"
+      DB_PASSWORD: "1234"
+      DB_DB: "onay"
+      DB_HOST: "localhost"
+      DB_TABLE: "users"
       DB_PORT: "5432"
       SSL_MODE: "disable"
     ports:

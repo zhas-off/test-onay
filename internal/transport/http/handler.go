@@ -23,7 +23,7 @@ func NewHandler(service UserService) *Handler {
 	h.App = fiber.New()
 
 	// Sets up our middleware functions
-	h.App.Use(CheckAgeMiddleware)
+	// h.App.Use(CheckAgeMiddleware)
 
 	// Set up the routes
 	h.mapRoutes()
@@ -33,7 +33,7 @@ func NewHandler(service UserService) *Handler {
 
 func (h *Handler) mapRoutes() {
 	h.App.Post("/api/v1/user", h.PostUser)
-	h.App.Get("/api/user/:id", h.GetUsers)
+	h.App.Get("/api/user", h.GetUsers)
 	h.App.Put("/api/user/:id", h.UpdateUser)
 }
 
