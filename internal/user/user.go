@@ -7,7 +7,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// User -
 type User struct {
 	ID       string `json:"id"`
 	FullName string `json:"fullName"`
@@ -31,7 +30,6 @@ func NewService(store Store) *Service {
 	}
 }
 
-// GetComment - retrieves comments by their ID from the database
 func (s *Service) GetUsers(ctx *fiber.Ctx) (User, error) {
 	users, err := s.Store.GetUsers(ctx)
 	if err != nil {

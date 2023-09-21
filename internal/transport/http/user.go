@@ -13,7 +13,6 @@ type UserService interface {
 	UpdateUser(ctx *fiber.Ctx, ID string, newUser user.User) (user.User, error)
 }
 
-// PostCommentRequest
 type PostUserRequest struct {
 	FullName string `json:"fullName"`
 	Age      int    `json:"age"`
@@ -68,7 +67,6 @@ func (h *Handler) PostUser(c *fiber.Ctx) error {
 	return c.JSON(cmt)
 }
 
-// UpdateComment - обновить комментарий
 func (h *Handler) UpdateUser(c *fiber.Ctx) error {
 	commentID := c.Params("id")
 
