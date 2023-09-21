@@ -8,21 +8,19 @@ import (
 	"github.com/zhas-off/test-onay/internal/user"
 )
 
-// Run - sets up our application
+// Run - запускает наше приложение
 func Run() error {
 	log.SetFormatter(&log.JSONFormatter{})
 	log.Info("Setting Up Our APP")
 
-	var err error
-
-	err = godotenv.Load("../.env")
+	err := godotenv.Load(".env")
 
 	if err != nil {
 		log.Error("Error loading .env file")
 		return err
 	}
 
-	store, err := database.NewDatabase() //connecting to database
+	store, err := database.NewDatabase() // Подключение к базе данных
 	if err != nil {
 		log.Error("failed to setup connection to the database")
 		return err

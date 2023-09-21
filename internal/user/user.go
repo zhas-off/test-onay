@@ -7,6 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+// Comment - структура для наших пользователей
 type User struct {
 	ID       string `json:"id"`
 	FullName string `json:"fullName"`
@@ -14,16 +15,19 @@ type User struct {
 	Address  string `json:"address"`
 }
 
+// Store - интерфейс, который нам нужен для хранения пользователей
 type Store interface {
 	GetUsers(*fiber.Ctx) (User, error)
 	PostUser(*fiber.Ctx, User) (User, error)
 	UpdateUser(*fiber.Ctx, string, User) (User, error)
 }
 
+// Service - структура для нашего сервиса пользователей
 type Service struct {
 	Store Store
 }
 
+// NewService - возвращает новый сервис для пользователей
 func NewService(store Store) *Service {
 	return &Service{
 		Store: store,
