@@ -12,10 +12,10 @@ import (
 
 type Handler struct {
 	App     *fiber.App
-	Service CommentService
+	Service UserService
 }
 
-func NewHandler(service CommentService) *Handler {
+func NewHandler(service UserService) *Handler {
 	h := &Handler{
 		Service: service,
 	}
@@ -32,9 +32,9 @@ func NewHandler(service CommentService) *Handler {
 }
 
 func (h *Handler) mapRoutes() {
-	h.App.Post("/api/v1/comment", h.PostComment)
-	h.App.Get("/api/v1/comment/:id", h.GetComments)
-	h.App.Put("/api/v1/comment/:id", h.UpdateComment)
+	h.App.Post("/api/v1/user", h.PostUser)
+	h.App.Get("/api/user/:id", h.GetUsers)
+	h.App.Put("/api/user/:id", h.UpdateUser)
 }
 
 // Serve  serves our newly set up handler function
