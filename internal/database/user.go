@@ -12,8 +12,8 @@ import (
 type UserRow struct {
 	ID       string
 	FullName string
-	Age      int
-	Address  string
+	Age      int 
+	Address  string 
 }
 
 // GetUsers - извлекает всех пользователей из базы данных
@@ -55,7 +55,7 @@ func (d *Database) UpdateUser(ctx *fiber.Ctx, uuid string, usr user.User) (user.
 	}
 
 	err := d.Client.Save(&postRow).Error
-	
+
 	if err != nil {
 		return user.User{}, fmt.Errorf("failed to insert user: %w", err)
 	}
