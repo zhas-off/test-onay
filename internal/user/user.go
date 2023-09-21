@@ -17,7 +17,7 @@ type User struct {
 
 // Store - интерфейс, который нам нужен для хранения пользователей
 type Store interface {
-	GetUsers(*fiber.Ctx) (User, error)
+	GetUsers(*fiber.Ctx) ([]User, error)
 	PostUser(*fiber.Ctx, User) (User, error)
 	UpdateUser(*fiber.Ctx, string, User) (User, error)
 }
@@ -35,11 +35,11 @@ func NewService(store Store) *Service {
 }
 
 // GetUsers - извлекает всех пользователей из базы данных
-func (s *Service) GetUsers(ctx *fiber.Ctx) (User, error) {
+func (s *Service) GetUsers(ctx *fiber.Ctx) ([]User, error) {
 	users, err := s.Store.GetUsers(ctx)
 	if err != nil {
 		log.Errorf("an error occured fetching the user: %s", err.Error())
-		return User{}, errors.New("could not fetch user by ID")
+		return nil, errors.New("could not fetch user by ID")
 	}
 	return users, nil
 }

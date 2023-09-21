@@ -23,7 +23,7 @@ func NewHandler(service UserService) *Handler {
 	h.App = fiber.New()
 
 	// Sets up our middleware functions
-	// h.App.Use(CheckAgeMiddleware)
+	h.App.Use(CheckAgeMiddleware)
 
 	// Set up the routes
 	h.mapRoutes()
@@ -32,7 +32,7 @@ func NewHandler(service UserService) *Handler {
 }
 
 func (h *Handler) mapRoutes() {
-	h.App.Post("/api/v1/user", h.PostUser)
+	h.App.Post("/api/user", h.PostUser)
 	h.App.Get("/api/user", h.GetUsers)
 	h.App.Put("/api/user/:id", h.UpdateUser)
 }
@@ -52,7 +52,7 @@ func (h *Handler) Serve() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	if err := h.App.ShutdownWithContext(ctx); err != nil {
-		panic(err)
+		log.Error(err)
 	}
 
 	log.Println("shutting down gracefully")

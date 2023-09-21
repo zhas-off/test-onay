@@ -24,7 +24,7 @@ func NewDatabase() (*Database, error) {
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_TABLE"),
+		os.Getenv("DB_DB"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("SSL_MODE"),
 	)

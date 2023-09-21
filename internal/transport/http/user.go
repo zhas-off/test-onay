@@ -8,7 +8,7 @@ import (
 )
 
 type UserService interface {
-	GetUsers(ctx *fiber.Ctx) (user.User, error)
+	GetUsers(ctx *fiber.Ctx) ([]user.User, error)
 	PostUser(ctx *fiber.Ctx, usr user.User) (user.User, error)
 	UpdateUser(ctx *fiber.Ctx, ID string, newUser user.User) (user.User, error)
 }
@@ -45,6 +45,7 @@ func userFromUpdateUserRequest(u UpdateUserRequest) user.User {
 func (h *Handler) GetUsers(c *fiber.Ctx) error {
 	user, err := h.Service.GetUsers(c)
 	if err != nil {
+		log.Error(err)
 		return c.Status(fiber.StatusInternalServerError).SendString("Internal Server Error")
 	}
 
@@ -56,6 +57,7 @@ func (h *Handler) PostUser(c *fiber.Ctx) error {
 	var postUserReq PostUserRequest
 
 	if err := c.BodyParser(&postUserReq); err != nil {
+		log.Error(err)
 		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
 	}
 
@@ -75,10 +77,12 @@ func (h *Handler) UpdateUser(c *fiber.Ctx) error {
 
 	var updateUserRequest UpdateUserRequest
 	if err := c.BodyParser(&updateUserRequest); err != nil {
+		log.Error(err)
 		return c.Status(fiber.StatusBadRequest).SendString("Bad Request")
 	}
 
 	user := userFromUpdateUserRequest(updateUserRequest)
+	user.ID = userID
 
 	user, err := h.Service.UpdateUser(c, userID, user)
 	if err != nil {
