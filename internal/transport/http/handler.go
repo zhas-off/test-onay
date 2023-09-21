@@ -33,7 +33,7 @@ func NewHandler(service UserService) *Handler {
 
 func (h *Handler) mapRoutes() {
 	h.App.Post("/api/user", h.PostUser)
-	h.App.Get("/api/user", h.GetUsers)
+	h.App.Get("/api/users", h.GetUsers)
 	h.App.Put("/api/user/:id", h.UpdateUser)
 }
 
