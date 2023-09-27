@@ -22,9 +22,6 @@ func NewHandler(service UserService) *Handler {
 
 	h.App = fiber.New()
 
-	// Sets up our middleware functions
-	h.App.Use(CheckAgeMiddleware)
-
 	// Set up the routes
 	h.mapRoutes()
 
@@ -32,9 +29,16 @@ func NewHandler(service UserService) *Handler {
 }
 
 func (h *Handler) mapRoutes() {
-	h.App.Post("/api/user", h.PostUser)
-	h.App.Get("/api/users", h.GetUsers)
-	h.App.Put("/api/user/:id", h.UpdateUser)
+	// Создаем группу маршрутов "/api"
+	api := h.App.Group("/api")
+
+	// Применяем middleware к группе маршрутов
+	api.Use(CheckAgeMiddleware)
+
+	// Определяем маршруты внутри группы
+	api.Post("/user", h.PostUser)
+	api.Get("/users", h.GetUsers)
+	api.Put("/user/:id", h.UpdateUser)
 }
 
 // Serve  serves our newly set up handler function
